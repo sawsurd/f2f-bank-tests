@@ -1,0 +1,54 @@
+services:
+  client:
+    build: ./client
+    volumes:
+      - client_dist:/dist
+    command: sh -c "cp -r /app/dist/* /dist"
+    networks:
+      - ml-service-network
+
+  app:
+    build: ./app/
+    env_file:
+      - ./app/.env
+    volumes:
+      - ./app:/app
+    depends_on:
+      database:
+        condition: service_started
+    networks:
+      - ml-service-network
+
+  web-proxy:
+    build: ./nginx
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - app
+      - client
+    volumes:
+      - client_dist:/usr/share/nginx/html
+    networks:
+      - ml-service-network
+
+  database:
+    image: postgres:16
+    expose:
+      - 5432
+    env_file:
+      - ./postgres/.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ml-service-network
+
+volumes:
+  postgres_data:
+  client_dist:
+
+networks:
+  ml-service-network:
+    name: ml-service-network
+    driver: bridge
+
