@@ -1,11 +1,15 @@
 import { test as base } from '@playwright/test';
 import {RegisterPage} from "../pages/registerPage/registerPage";
 import {generateUser, TestUser} from "../utils/testData";
+import {LoginPage} from "../pages/loginPage/loginPage";
+import {ProfilePage} from "../pages/profilePage/profilePage";
 
 type Fixtures = {
     registerPage: RegisterPage;
     testUser: TestUser;
     registeredUser: TestUser;
+    loginPage: LoginPage;
+    profilePage: ProfilePage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -31,4 +35,14 @@ export const test = base.extend<Fixtures>({
         await register.open();
         await use(testUser);
     },
+    loginPage: async ({page}, use) => {
+        const login = new LoginPage(page);
+        await login.open();
+        await page.waitForLoadState('networkidle');
+        await use(login);
+    },
+    profilePage: async ({page}, use) => {
+        const profile = new ProfilePage(page);
+        await use(profile);
+    }
 });
