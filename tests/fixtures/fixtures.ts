@@ -3,8 +3,10 @@ import {RegisterPage} from "../pages/registerPage/registerPage";
 import {generateUser, TestUser} from "../utils/testData";
 import {LoginPage} from "../pages/loginPage/loginPage";
 import {ProfilePage} from "../pages/profilePage/profilePage";
+import {MainPage} from "../pages/mainPage/mainPage";
 
 type Fixtures = {
+    mainPage: MainPage;
     registerPage: RegisterPage;
     testUser: TestUser;
     registeredUser: TestUser;
@@ -13,10 +15,12 @@ type Fixtures = {
 };
 
 export const test = base.extend<Fixtures>({
+    mainPage: async ({page}, use) => {
+        const main = new MainPage(page);
+        await use(main);
+    },
     registerPage: async ({page}, use ) => {
         const register = new RegisterPage(page);
-        await register.open();
-        await page.waitForLoadState('networkidle');
         await use(register);
     },
     testUser: async ({}, use) => {
@@ -37,8 +41,6 @@ export const test = base.extend<Fixtures>({
     },
     loginPage: async ({page}, use) => {
         const login = new LoginPage(page);
-        await login.open();
-        await page.waitForLoadState('networkidle');
         await use(login);
     },
     profilePage: async ({page}, use) => {

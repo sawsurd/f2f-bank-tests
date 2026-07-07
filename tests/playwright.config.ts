@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import {fakerLV} from "@faker-js/faker";
 
 /**
  * Read environment variables from file.
@@ -27,6 +28,10 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: 'http://localhost',
+    headless: false,
+    launchOptions: {
+      slowMo: 300,
+    },
 
     /* Collect trace when retrying the failed tests. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',

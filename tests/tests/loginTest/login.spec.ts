@@ -2,28 +2,38 @@ import { test } from '../../fixtures/fixtures';
 
 test.describe('Авторизация пользователя', () => {
 
+    test.beforeEach(async ({ loginPage }) => {
+        await loginPage.open();
+    });
+
+    // Вход в аккаунт с валидными данными
     test('Вход с валидными данными', async ({ registeredUser, loginPage }) => {
         //Arrange
         const user = registeredUser;
         // Act
+        await loginPage.open();
         await loginPage.login(user.email, user.password);
         // Assert
         await loginPage.assertLogin();
     });
 
+    // Вход в аккаунт с неверным паролем
     test('Вход с неверным паролем', async ({ registeredUser, page, loginPage }) => {
         // Arrange
         const responsePromise = page.waitForResponse(
             res => res.url().includes('/login') && res.request().method() === 'POST'
         );
+        const user = registeredUser;
         // Act
-        await loginPage.login(registeredUser.email, 'WrongPassword123!');
+        await loginPage.open();
+        await loginPage.login(user.email, 'WrongPassword123!');
         const response = await responsePromise;
         // Assert
         await loginPage.assertNotAuthenticated();
         await loginPage.assertResponseStatus(response, 401);
     });
 
+    // Вход в аккаунт с незарегистрированным email
     test('Вход с несуществующим email', async ({ page, loginPage }) => {
         // Arrange
         const responsePromise = page.waitForResponse(
@@ -37,6 +47,7 @@ test.describe('Авторизация пользователя', () => {
         await loginPage.assertResponseStatus(response, 401);
     });
 
+    // Попытка входа с пустыми полями
     test('Попытка входа с пустыми полями', async ({ loginPage }) => {
         // Act
         await loginPage.resetAllFields();
@@ -46,6 +57,7 @@ test.describe('Авторизация пользователя', () => {
         await loginPage.assertFormValidationError();
     });
 
+    // Проверка некорректного email
     test('Валидация некорректного формата email', async ({ loginPage }) => {
         // Act
         await loginPage.login('invalid-email', 'Password123');

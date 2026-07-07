@@ -1,6 +1,11 @@
 import { test } from '../../fixtures/fixtures';
 
 test.describe('Регистрация пользователя', () => {
+
+    test.beforeEach(async ({ registerPage }) => {
+        await registerPage.open();
+    });
+
     // Валидные данные
     test('Регистрация пользователя с валидными данными', async ({ registerPage, testUser }) => {
         //Act
@@ -55,6 +60,4 @@ test.describe('Регистрация пользователя', () => {
         //Assert
         await registerPage.assertPasswordValidationError();
     });
-
-
 });

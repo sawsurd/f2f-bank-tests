@@ -2,6 +2,7 @@ import { test } from '../../fixtures/fixtures';
 
 test.describe('Профиль пользователя', () => {
 
+    // Проверка данных в профиле после входа
     test('Отображение корректных данных в профиле', async ({ registeredUser, profilePage, loginPage }) => {
         //Act
         await loginPage.open();

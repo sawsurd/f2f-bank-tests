@@ -22,3 +22,12 @@ export function generatePhone(): string {
     const digits = faker.string.numeric(10);
     return `+7${digits}`;
 }
+
+export function generateAmountToTransfer(): number {
+    return faker.number.float({min: 100, max: 10000});
+}
+
+
+export function generatePurpose(): string {
+    return faker.lorem.sentence();
+}
