@@ -155,7 +155,14 @@ docker compose down -v
 ---
 ## 2. Запуск тестов из корневой директории:
 ```bash
+npm i
+```
+
+```bash
 cd tests/
+```
+
+```bash
 npx playwright test
 ```
 
