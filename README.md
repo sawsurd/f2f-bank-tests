@@ -155,11 +155,11 @@ docker compose down -v
 ---
 ## 2. Запуск тестов из корневой директории:
 ```bash
-npm i
+cd tests/
 ```
 
 ```bash
-cd tests/
+npm i
 ```
 
 ```bash
