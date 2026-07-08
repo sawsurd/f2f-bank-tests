@@ -20,7 +20,7 @@ export class MainPage {
         this.submitButton = page.locator('button[type="submit"]');
         this.cancelButton = page.locator('button[type="button"]');
         this.errors = page.locator('[class*="error"]');
-        this.successMessage = page.locator('[class*="success"]');
+        this.successMessage = page.locator('[class*="success-text"]');
         this.balance = page.locator('[class="header__link"]').nth(0);
     }
 

@@ -23,13 +23,15 @@ test.describe('Перевод средств', () => {
     });
 
     // Валидный перевод при ненулевом балансе
-    test('Попытка перевода средств при ненулевом балансе', async ({ mainPage }) => {
-        // TODO ДОБАВИТЬ БАЛАНС
+    test('Попытка перевода средств при ненулевом балансе', async ({ mainPage, transactionsPage }) => {
         // Act
+        await transactionsPage.open();
+        await transactionsPage.clickAddBalance();
+        await transactionsPage.topUpBalance('5000');
         await mainPage.open();
         await mainPage.fillPhone(await mainPage.generatePhoneInput());
         await mainPage.fillPurpose(await mainPage.generatePurpose());
-        await mainPage.fillAmount(String(await mainPage.generateAmount()));
+        await mainPage.fillAmount('500');
         await mainPage.submitForm();
         // Assert
         await mainPage.assertTransferSuccess();
@@ -37,9 +39,6 @@ test.describe('Перевод средств', () => {
 
     // Проверка валидации номера телефона с разными форматами
     test('Валидация номера телефона со скобками и дефисами', async ({ mainPage, page }) => {
-        // TODO ДОБАВИТЬ БАЛАНС
-
-
         // Arrange
         const responsePromise = page.waitForResponse(
             res => res.url().includes('/transfer') && res.request().method() === 'POST'

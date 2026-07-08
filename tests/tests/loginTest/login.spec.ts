@@ -64,4 +64,18 @@ test.describe('Авторизация пользователя', () => {
         // Assert
         await loginPage.assertNotAuthenticated();
         await loginPage.assertFormValidationError();
-    });});
+    });
+
+    // Выход из аккаунта через кнопку выхода
+    test('Выход из аккаунта через кнопку выхода', async ({ registeredUser, loginPage }) => {
+        // Arrange
+        const user = registeredUser;
+        // Act
+        await loginPage.open();
+        await loginPage.login(user.email, user.password);
+        await loginPage.assertLogin();
+        await loginPage.logout();
+        // Assert
+        await loginPage.assertNotAuthenticated();
+    });
+});

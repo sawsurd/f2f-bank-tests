@@ -4,6 +4,7 @@ import {generateUser, TestUser} from "../utils/testData";
 import {LoginPage} from "../pages/loginPage/loginPage";
 import {ProfilePage} from "../pages/profilePage/profilePage";
 import {MainPage} from "../pages/mainPage/mainPage";
+import {TransactionsPage} from "../pages/transactionsPage/transactionsPage";
 
 type Fixtures = {
     mainPage: MainPage;
@@ -12,6 +13,7 @@ type Fixtures = {
     registeredUser: TestUser;
     loginPage: LoginPage;
     profilePage: ProfilePage;
+    transactionsPage: TransactionsPage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -46,5 +48,9 @@ export const test = base.extend<Fixtures>({
     profilePage: async ({page}, use) => {
         const profile = new ProfilePage(page);
         await use(profile);
+    },
+    transactionsPage: async ({page}, use) => {
+        const transactions = new TransactionsPage(page);
+        await use(transactions);
     }
 });

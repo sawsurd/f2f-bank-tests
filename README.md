@@ -220,7 +220,7 @@ npm init playwright@latest
 - Запуск тестов:
 
 ```bash
-npx playwright tests
+npx playwright test
 ```
 
 Запуск в UI-режиме (визуальный, удобен для отладки):

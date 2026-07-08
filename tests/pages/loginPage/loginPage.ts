@@ -59,4 +59,9 @@ export class LoginPage {
         const isFormValid = await this.page.$eval('form', (form: HTMLFormElement) => form.checkValidity());
         expect(isFormValid).toBe(false);
     }
+
+    async logout() {
+        const logoutButton = this.page.locator('button[type="button"][class*="app-button"]').first();
+        await logoutButton.click();
+    }
 }
